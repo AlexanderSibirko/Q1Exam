@@ -3,9 +3,24 @@
     Console.WriteLine(Message);
 }
 
+int RandomMinMax(int minValue, int maxValue)
+{
+    return new Random().Next(minValue, maxValue);
+}
+
+int[] RandomArray(int elementCount, int minValue, int maxValue)
+{
+    int[] resultArray = new int[elementCount];
+    for (int i = 0; i < elementCount; i++)
+    {
+        resultArray[i] = RandomMinMax(minValue,maxValue);
+    }
+    return resultArray;
+}
+
 int[] CreatingArray()
 {
-    OutputMessage($"Вводите исходные целые числа (от {int.MinValue} до {int.MaxValue}) по одному, когда введёте все числа напишите команду \"End\"");
+    OutputMessage($"Вводите исходные целые числа (от {int.MinValue} до {int.MaxValue}) по одному, когда введёте все числа напишите команду \"End\" или напишите \"Random\" для случайной генерации");
     int[] resultArray = new int[10];
     int i = 0;
     while (true) //запрашиваем числа по одному
@@ -13,6 +28,17 @@ int[] CreatingArray()
         string UserString = string.Empty;
         UserString = Console.ReadLine();
         if (UserString.ToLower() == "end") break;
+        
+        if (UserString.ToLower() == "random") 
+        {
+            int elementCount = RandomMinMax(5,10);
+            int minElementValue = RandomMinMax(-100,0);
+            int maxElementValue = RandomMinMax(0,100);
+            Array.Resize(ref resultArray, elementCount);
+            resultArray = RandomArray(elementCount,minElementValue,maxElementValue); 
+            return resultArray;
+        }
+        
         if (int.TryParse(UserString, out int num))
         {
             resultArray[i] = num;
